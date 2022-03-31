@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MdHome,
   MdPersonSearch,
   MdMovie,
   MdDirectionsCarFilled,
@@ -19,11 +18,6 @@ export function Header() {
 
       <nav>
         <Link to="/">
-          <MdHome size={20} />
-          Home
-        </Link>
-
-        <Link to="/people">
           <MdPersonSearch size={20} />
           Personagens
         </Link>
