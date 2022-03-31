@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  Fragment, useCallback, useEffect, useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { debounce } from 'lodash';
@@ -86,16 +88,14 @@ export default function Home() {
         {!inputSearch && (
           <div className="pagination">
             {page === 1 ? (
-              <PaginationButton disabled>
-                <MdArrowBackIosNew />
-              </PaginationButton>
+              <div />
             ) : (
               <PaginationButton onClick={() => setPage(page - 1)}>
                 <MdArrowBackIosNew />
               </PaginationButton>
             )}
 
-            {page <= 3 ? (
+            {page < 3 ? (
               <>
                 <PaginationButton
                   isActive={page === 1}
@@ -129,9 +129,7 @@ export default function Home() {
             )}
 
             {!data?.next ? (
-              <PaginationButton disabled>
-                <MdArrowForwardIos />
-              </PaginationButton>
+              <div />
             ) : (
               <PaginationButton onClick={() => setPage(page + 1)}>
                 <MdArrowForwardIos />
