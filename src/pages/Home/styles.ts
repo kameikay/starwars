@@ -36,6 +36,13 @@ export const Container = styled.div`
         margin-left: 1rem;
       }
     }
+
+    .select {
+
+      button + button {
+        margin-left: 2rem;
+      }
+    }
   }
     
   .cards {

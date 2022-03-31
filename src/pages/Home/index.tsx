@@ -12,6 +12,7 @@ import { PaginationButton } from '../../components/PaginationButton';
 import { CompleteDataTypes } from '../../types/CompleteData.types';
 import { Loading } from '../../components/Loading';
 import { getCharacterId } from '../../utils/getCharacterId';
+import { SelectButton } from '../../components/SelectButton';
 
 export default function Home() {
   const [data, setData] = useState<CompleteDataTypes>();
@@ -19,6 +20,7 @@ export default function Home() {
   const [inputSearch, setInputSearch] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFavouriteSelected, setIsFavouriteSelected] = useState<boolean>(false);
 
   const getData = useCallback(async () => {
     try {
@@ -82,6 +84,22 @@ export default function Home() {
           onChange={(event) => debouncedOnChange(event)}
         />
 
+        <div className="select">
+          <SelectButton
+            type="button"
+            isSelected={isFavouriteSelected === false}
+            onClick={() => setIsFavouriteSelected(false)}
+          >
+            Todos
+          </SelectButton>
+          <SelectButton
+            isSelected={isFavouriteSelected === true}
+            onClick={() => setIsFavouriteSelected(true)}
+          >
+            Favoritos
+          </SelectButton>
+        </div>
+
         {!inputSearch && (
           <div className="pagination">
             {page === 1 ? (
@@ -142,18 +160,20 @@ export default function Home() {
           <span>Carregando dados...</span>
         </div>
       ) : (
-        <div className="cards">
-          {characters.map((character) => (
-            <CharacterCard
-              imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getCharacterId(
-                character,
-              )}.jpg`}
-              name={character.name}
-              key={character.name}
-              id={getCharacterId(character)}
-            />
-          ))}
-        </div>
+        !isFavouriteSelected && (
+          <div className="cards">
+            {characters.map((character) => (
+              <CharacterCard
+                imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getCharacterId(
+                  character,
+                )}.jpg`}
+                name={character.name}
+                key={character.name}
+                id={getCharacterId(character)}
+              />
+            ))}
+          </div>
+        )
       )}
     </Container>
   );
