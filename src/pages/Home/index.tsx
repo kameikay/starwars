@@ -1,8 +1,7 @@
-import React, {
-  useCallback, useEffect, useState,
-} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
+import { debounce } from 'lodash';
 import { CharacterCard } from '../../components/CharacterCard';
 import { InputSearch } from '../../components/InputSearch';
 
@@ -44,11 +43,18 @@ export default function Home() {
 
       setData(returnedData);
       setCharacters(returnedData.results);
+      console.log('request');
     } catch {
     } finally {
       setIsLoading(false);
     }
   }, [inputSearch]);
+
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputSearch(event.target.value);
+  }
+
+  const debouncedOnChange = debounce(handleInputChange, 500);
 
   useEffect(() => {
     setIsLoading(true);
@@ -74,8 +80,7 @@ export default function Home() {
         <InputSearch
           type="text"
           placeholder="Digite o nome do personagem a ser buscado..."
-          value={inputSearch}
-          onChange={(e) => setInputSearch(e.target.value)}
+          onChange={(event) => debouncedOnChange(event)}
         />
 
         {!inputSearch && (
