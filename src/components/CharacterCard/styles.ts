@@ -5,12 +5,34 @@ export const Container = styled.div`
   position: relative;
   transition: all 0.3s ease-in;
   border-radius: 0.5rem;
+  z-index: 2;
+
+  > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    border: none;
+    background: transparent;
+    z-index: 9;
+
+    svg {
+      color: ${({ theme }) => theme.colors.warning.main};
+    }
+
+    &:hover {
+      svg {
+        color: ${({ theme }) => theme.colors.warning.light};
+      }
+    }
+  }
 
   &:hover {
-    filter: brightness(80%);
-
     .character-name {
-      span {
+      a {
         position: relative;
 
         &::after {
@@ -40,7 +62,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
 
-    span {
+    a {
       background-color: ${({ theme }) => theme.colors.light[900]};
       color: ${({ theme }) => theme.colors.dark[900]};
       height: 3rem;
@@ -50,6 +72,10 @@ export const Container = styled.div`
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease-in;
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.light[500]};
+      }
     }
   }
 `;

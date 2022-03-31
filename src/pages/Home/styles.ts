@@ -45,7 +45,7 @@ export const Container = styled.div`
     flex-wrap: wrap;
     margin-top: 2rem;
 
-    a {
+    > div {
       margin: 1rem;
     }
   }

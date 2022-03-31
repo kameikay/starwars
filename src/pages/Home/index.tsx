@@ -1,7 +1,4 @@
-import React, {
-  Fragment, useCallback, useEffect, useState,
-} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { debounce } from 'lodash';
 import { CharacterCard } from '../../components/CharacterCard';
@@ -147,17 +144,14 @@ export default function Home() {
       ) : (
         <div className="cards">
           {characters.map((character) => (
-            <Link
-              to={`/characters/${getCharacterId(character)}`}
+            <CharacterCard
+              imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getCharacterId(
+                character,
+              )}.jpg`}
+              name={character.name}
               key={character.name}
-            >
-              <CharacterCard
-                imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getCharacterId(
-                  character,
-                )}.jpg`}
-                name={character.name}
-              />
-            </Link>
+              id={getCharacterId(character)}
+            />
           ))}
         </div>
       )}
