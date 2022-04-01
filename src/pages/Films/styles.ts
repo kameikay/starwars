@@ -68,4 +68,9 @@ export const Container = styled.div`
       font-size: 2rem;
     }
   }
+
+  .no-favourite {
+    padding: 1rem;
+    margin-top: 2rem;
+  }
 `;

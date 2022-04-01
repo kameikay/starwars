@@ -84,11 +84,13 @@ export default function Home() {
       </div>
 
       <div className="header">
-        <InputSearch
-          type="text"
-          placeholder="Digite o nome do personagem a ser buscado..."
-          onChange={(event) => debouncedOnChange(event)}
-        />
+        {!isFavouriteSelected && (
+          <InputSearch
+            type="text"
+            placeholder="Digite o nome do personagem a ser buscado..."
+            onChange={(event) => debouncedOnChange(event)}
+          />
+        )}
 
         <div className="select">
           <SelectButton
@@ -106,7 +108,7 @@ export default function Home() {
           </SelectButton>
         </div>
 
-        {!inputSearch && (
+        {!inputSearch && !isFavouriteSelected && (
           <div className="pagination">
             {page === 1 ? (
               <div />
@@ -162,7 +164,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* eslint-disable-next-line no-nested-ternary */}
       {isLoading ? (
         <div className="loading">
           <Loading />
@@ -179,6 +180,9 @@ export default function Home() {
               key={character.name}
               id={getUrlId(character.url)}
               type="characters"
+              isFavourited={favouriteCharacters.some(
+                (favourite) => favourite.name === character.name,
+              )}
             />
           ))}
         </div>
@@ -192,6 +196,7 @@ export default function Home() {
                 key={character.name}
                 id={character.id}
                 type="characters"
+                isFavourited
               />
             ))}
 

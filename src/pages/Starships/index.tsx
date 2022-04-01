@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
+import { useSelector } from 'react-redux';
 import { Card } from '../../components/CharacterCard';
 import { InputSearch } from '../../components/InputSearch';
 
@@ -9,11 +10,15 @@ import { Container } from './styles';
 import { Loading } from '../../components/Loading';
 import { getUrlId } from '../../utils/getUrlId';
 import { Starship } from '../../types/Starship.types';
+import { RootState } from '../../store';
+import { SelectButton } from '../../components/SelectButton';
 
 export default function Starships() {
   const [starships, setStarships] = useState<Starship[]>([]);
   const [inputSearch, setInputSearch] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFavouriteSelected, setIsFavouriteSelected] = useState<boolean>(false);
+  const starshipsFavourite = useSelector((state: RootState) => state.starship);
 
   const getData = useCallback(async () => {
     try {
@@ -68,11 +73,29 @@ export default function Starships() {
       </div>
 
       <div className="header">
-        <InputSearch
-          type="text"
-          placeholder="Digite o nome da nave a ser buscada..."
-          onChange={(event) => debouncedOnChange(event)}
-        />
+        {!isFavouriteSelected && (
+          <InputSearch
+            type="text"
+            placeholder="Digite o nome da nave a ser buscada..."
+            onChange={(event) => debouncedOnChange(event)}
+          />
+        )}
+
+        <div className="select">
+          <SelectButton
+            type="button"
+            isSelected={isFavouriteSelected === false}
+            onClick={() => setIsFavouriteSelected(false)}
+          >
+            Todos
+          </SelectButton>
+          <SelectButton
+            isSelected={isFavouriteSelected === true}
+            onClick={() => setIsFavouriteSelected(true)}
+          >
+            Favoritos
+          </SelectButton>
+        </div>
       </div>
 
       {isLoading ? (
@@ -80,7 +103,7 @@ export default function Starships() {
           <Loading />
           <span>Carregando dados...</span>
         </div>
-      ) : (
+      ) : !isFavouriteSelected ? (
         <div className="cards">
           {starships.map((starship) => (
             <Card
@@ -91,6 +114,22 @@ export default function Starships() {
               key={starship.name}
               id={getUrlId(starship.url)}
               type="starships"
+              isFavourited={starshipsFavourite.some(
+                (dataStore) => dataStore.name === starship.name,
+              )}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="cards">
+          {starshipsFavourite.map((starship) => (
+            <Card
+              imageUrl={`https://starwars-visualguide.com/assets/img/starships/${starship.id}.jpg`}
+              name={starship.name}
+              key={starship.name}
+              id={starship.id}
+              type="starships"
+              isFavourited
             />
           ))}
         </div>
