@@ -22,11 +22,11 @@ export function useStarship(data: Starship | undefined) {
         fetch(filmResponse)
           .then((dataResponse) => dataResponse.json())
           .then((filmData) => setFilms((prevState) => {
-            if (prevState.includes(filmData.name)) return prevState;
+            if (prevState.includes(filmData.title)) return prevState;
             return [
               ...prevState,
               {
-                name: filmData.name,
+                name: filmData.title,
                 url: filmData.url,
               },
             ];

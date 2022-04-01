@@ -1,41 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FaCarAlt, FaSpaceShuttle, FaUserAlt } from 'react-icons/fa';
-import { IoMdPlanet } from 'react-icons/io';
-import { BiDna } from 'react-icons/bi';
+import { FaUserAlt } from 'react-icons/fa';
+import { MdMovie } from 'react-icons/md';
 import { Loading } from '../../components/Loading';
 import { api } from '../../services/api';
 import { CharacterContainer, Container } from './styles';
-import { Film } from '../../types/Film.types';
-import { useFilms } from '../../hooks/useFilm';
+import { useStarship } from '../../hooks/useStarship';
+import { Starship } from '../../types/Starship.types';
+import { getUrlId } from '../../utils/getUrlId';
 
 export default function StartshipPage() {
-  const [data, setData] = useState<Film>();
-  const {
-    characters,
-    planets,
-    species,
-    starships,
-    vehicles,
-    isLoading: isLoadingFilms,
-  } = useFilms(data);
+  const [data, setData] = useState<Starship>();
+  const { films, isLoading: isLoadingStarship, pilot } = useStarship(data);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { id } = useParams();
 
   const getCharacterData = useCallback(async () => {
     try {
-      const response = await api.get(`/films/${id}`);
+      const response = await api.get(`/starships/${id}`);
       setData(response.data);
     } catch {
     } finally {
       setIsLoading(false);
     }
   }, [id]);
-
-  function getUrlId(url: string) {
-    const urlId = url.split('/');
-    return urlId[urlId.length - 2];
-  }
 
   useEffect(() => {
     getCharacterData();
@@ -47,122 +35,134 @@ export default function StartshipPage() {
         <Loading />
       ) : (
         <CharacterContainer>
-          <div className="films-data">
-            <div className="films-data-details">
-              <h1>{data?.title}</h1>
+          <div className="starships-data">
+            <div className="starships-data-details">
+              <h1>{data?.name}</h1>
               <p>
-                Data de criação:
+                Model:
                 {' '}
-                <span>{data?.release_date}</span>
+                <span>{data?.model}</span>
               </p>
 
               <p>
-                Diretor:
+                Fabricante:
                 {' '}
-                <span>{data?.director}</span>
+                <span>{data?.manufacturer}</span>
               </p>
 
               <p>
-                Produção:
+                Classe:
                 {' '}
-                <span>{data?.producer}</span>
+                <span>{data?.starship_class}</span>
               </p>
 
               <p>
-                Sinopse:
+                Preço:
                 {' '}
                 <span>
-                  {data?.opening_crawl}
+                  {data?.cost_in_credits}
+                  {' '}
+                  créditos
                   {' '}
                 </span>
               </p>
+
+              <p>
+                Velocidade:
+                {' '}
+                <span>
+                  {data?.max_atmosphering_speed}
+                  {' '}
+                  km/h
+                  {' '}
+                </span>
+              </p>
+
+              <p>
+                Classificação do hiperdrive:
+                {' '}
+                <span>
+                  {data?.hyperdrive_rating}
+                  {' '}
+                </span>
+              </p>
+
+              <p>
+                MGLT:
+                {' '}
+                <span>{data?.MGLT}</span>
+              </p>
+              <p>
+                Tamanho:
+                {' '}
+                <span>
+                  {data?.length}
+                  m
+                </span>
+              </p>
+              <p>
+                Capacidade de carga:
+                {' '}
+                <span>
+                  {data?.cargo_capacity}
+                  kg
+                </span>
+              </p>
+              <p>
+                Frota mínima:
+                {' '}
+                <span>{data?.crew}</span>
+              </p>
+              <p>
+                Passageiros:
+                {' '}
+                <span>{data?.passengers}</span>
+              </p>
             </div>
 
-            {isLoadingFilms ? (
+            {isLoadingStarship ? (
               <Loading />
             ) : (
-              <>
-                <div className="films-data-characters">
-                  <h2>Personagens:</h2>
+              <div className="starships-data-others">
+                <div className="starships-data-others-data">
+                  <h2>Filmes:</h2>
                   <ul>
-                    {characters.map((character) => (
-                      <li key={character.name}>
-                        <Link to={`/characters/${getUrlId(character.url)}`}>
-                          <FaUserAlt />
-                          {character.name}
+                    {films.map((film) => (
+                      <li key={film.name}>
+                        <Link to={`/films/${getUrlId(film.url)}`}>
+                          <MdMovie />
+                          {film.name}
                         </Link>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="films-data-others">
-                  <div className="films-data-others-data">
-                    <h2>Planetas</h2>
+                <div className="starships-data-others-data">
+                  <h2>Pilotos:</h2>
+                  {pilot.length < 1 ? (
+                    <span>Não possui pilotos</span>
+                  ) : (
                     <ul>
-                      {planets.map((planet) => (
-                        <li key={planet.name}>
-                          <Link to={`/planets/${getUrlId(planet.url)}`}>
-                            <IoMdPlanet />
-                            {planet.name}
+                      {pilot.map((pilots) => (
+                        <li key={pilots.name}>
+                          <Link to={`/pilots/${getUrlId(pilots.url)}`}>
+                            <FaUserAlt />
+                            {pilots.name}
                           </Link>
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  <div className="films-data-others-data">
-                    <h2>Veículos</h2>
-                    <ul>
-                      {vehicles.map((vehicle) => (
-                        <li key={vehicle.name}>
-                          <Link to={`/vehicles/${getUrlId(vehicle.url)}`}>
-                            <FaCarAlt />
-                            {vehicle.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  )}
                 </div>
-
-                <div className="films-data-others">
-                  <div className="films-data-others-data">
-                    <h2>Naves</h2>
-                    <ul>
-                      {starships.map((starship) => (
-                        <li key={starship.name}>
-                          <Link to={`/starships/${getUrlId(starship.url)}`}>
-                            <FaSpaceShuttle />
-                            {starship.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="films-data-others-data">
-                    <h2>Espécies</h2>
-                    <ul>
-                      {species.map((specie) => (
-                        <li key={specie.name}>
-                          <Link to={`/species/${getUrlId(specie.url)}`}>
-                            <BiDna />
-                            {specie.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </>
+              </div>
             )}
           </div>
 
           <div className="film-image">
             <img
-              src={`https://starwars-visualguide.com/assets/img/films/${id}.jpg`}
-              alt={`Imagem de ${data?.title}`}
+              src={`https://starwars-visualguide.com/assets/img/starships/${id}.jpg`}
+              alt={`Imagem de ${data?.name}`}
             />
           </div>
         </CharacterContainer>
