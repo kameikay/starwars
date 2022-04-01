@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md';
 import { IoMdJet } from 'react-icons/io';
 import { Container } from './styles';
-import logo from '../../../public/images/logo.svg';
+import logo from '/images/logo.svg';
 
 export function Header() {
   return (

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { debounce } from 'lodash';
+import { useSelector } from 'react-redux';
 import { Card } from '../../components/CharacterCard';
 import { InputSearch } from '../../components/InputSearch';
 
@@ -13,6 +14,8 @@ import { CompleteDataTypes } from '../../types/CompleteData.types';
 import { Loading } from '../../components/Loading';
 import { getUrlId } from '../../utils/getUrlId';
 import { SelectButton } from '../../components/SelectButton';
+import { RootState } from '../../store';
+import { ICharacterFavourite } from '../../store/slices/Character.slice';
 
 export default function Home() {
   const [data, setData] = useState<CompleteDataTypes>();
@@ -21,6 +24,10 @@ export default function Home() {
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isFavouriteSelected, setIsFavouriteSelected] = useState<boolean>(false);
+
+  const favouriteCharacters = useSelector(
+    (state: RootState) => state.character,
+  );
 
   const getData = useCallback(async () => {
     try {
@@ -155,27 +162,45 @@ export default function Home() {
         )}
       </div>
 
+      {/* eslint-disable-next-line no-nested-ternary */}
       {isLoading ? (
         <div className="loading">
           <Loading />
           <span>Carregando dados...</span>
         </div>
+      ) : !isFavouriteSelected ? (
+        <div className="cards">
+          {characters.map((character) => (
+            <Card
+              imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getUrlId(
+                character.url,
+              )}.jpg`}
+              name={character.name}
+              key={character.name}
+              id={getUrlId(character.url)}
+              type="characters"
+            />
+          ))}
+        </div>
       ) : (
-        !isFavouriteSelected && (
-          <div className="cards">
-            {characters.map((character) => (
+        <div className="cards">
+          {favouriteCharacters.length > 0
+            && favouriteCharacters.map((character: ICharacterFavourite) => (
               <Card
-                imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getUrlId(
-                  character.url,
-                )}.jpg`}
+                imageUrl={`https://starwars-visualguide.com/assets/img/characters/${character.id}.jpg`}
                 name={character.name}
                 key={character.name}
-                id={getUrlId(character.url)}
+                id={character.id}
                 type="characters"
               />
             ))}
-          </div>
-        )
+
+          {favouriteCharacters.length === 0 && (
+            <div className="no-favourites">
+              <span>Nenhum favorito encontrado</span>
+            </div>
+          )}
+        </div>
       )}
     </Container>
   );
