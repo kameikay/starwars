@@ -7,6 +7,8 @@ import FilmPage from './pages/FilmsPage';
 import Home from './pages/Home';
 import StartshipPage from './pages/StarshipPage';
 import Starships from './pages/Starships';
+import VehiclePage from './pages/VehiclePage';
+import Vehicles from './pages/Vehicles';
 
 function App() {
   return (
@@ -24,6 +26,11 @@ function App() {
       <Route path="/starships" element={<PageLayout />}>
         <Route index element={<Starships />} />
         <Route path="/starships/:id" element={<StartshipPage />} />
+      </Route>
+
+      <Route path="/vehicles" element={<PageLayout />}>
+        <Route index element={<Vehicles />} />
+        <Route path="/vehicles/:id" element={<VehiclePage />} />
       </Route>
     </Routes>
   );

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Starship } from '../types/Starship.types';
+import { Vehicle } from '../types/Vehicle.types';
 
 type Film = {
   name: string;
@@ -11,7 +12,7 @@ type Pilot = {
   url: string;
 };
 
-export function useStarship(data: Starship | undefined) {
+export function useStarship(data: Starship | Vehicle | undefined) {
   const [films, setFilms] = useState<Film[]>([]);
   const [pilot, setPilot] = useState<Pilot[]>([]);
   const [isLoading, setIsLoading] = useState(true);
