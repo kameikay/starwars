@@ -7,7 +7,7 @@ interface ICardProps {
   imageUrl: string;
   name: string;
   id: string;
-  type: 'characters' | 'films';
+  type: 'characters' | 'films' | 'starships' | 'vehicles' | 'planets';
 }
 
 export function Card({
