@@ -71,6 +71,7 @@ export const CharacterContainer = styled.div`
         h2 {
           font-weight: 400;
           font-size: 1rem;
+          border-bottom: 2px solid ${({ theme }) => theme.colors.primary.main};
         }
 
         ul {

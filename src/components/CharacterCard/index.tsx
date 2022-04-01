@@ -3,13 +3,16 @@ import { MdStarBorder, MdStar } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { Container } from './styles';
 
-interface ICharacterCardProps {
+interface ICardProps {
   imageUrl: string;
   name: string;
   id: string;
+  type: 'characters' | 'films';
 }
 
-export function CharacterCard({ imageUrl, name, id }: ICharacterCardProps) {
+export function Card({
+  type, imageUrl, name, id,
+}: ICardProps) {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   return (
     <Container>
@@ -19,8 +22,8 @@ export function CharacterCard({ imageUrl, name, id }: ICharacterCardProps) {
 
       <img src={imageUrl} alt={`Imagem de ${name}`} />
 
-      <div className="character-name">
-        <Link to={`/characters/${id}`}>
+      <div className="card-name">
+        <Link to={`/${type}/${id}`}>
           <span>{name}</span>
         </Link>
       </div>

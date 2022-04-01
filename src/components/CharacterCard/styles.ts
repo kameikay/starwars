@@ -31,7 +31,7 @@ export const Container = styled.div`
   }
 
   &:hover {
-    .character-name {
+    .card-name {
       a {
         position: relative;
 
@@ -53,7 +53,7 @@ export const Container = styled.div`
     border-radius: 0.5rem;
   }
 
-  .character-name {
+  .card-name {
     position: absolute;
     left: 0;
     bottom: 0;

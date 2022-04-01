@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PageLayout } from './components/PageLayout';
 import CharacterPage from './pages/CharacterPage';
+import Films from './pages/Films';
 import Home from './pages/Home';
 
 function App() {
@@ -12,6 +13,9 @@ function App() {
       </Route>
       <Route path="/characters/:id" element={<PageLayout />}>
         <Route index element={<CharacterPage />} />
+      </Route>
+      <Route path="/films" element={<PageLayout />}>
+        <Route index element={<Films />} />
       </Route>
     </Routes>
   );

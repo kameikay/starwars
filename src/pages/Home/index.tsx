@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { debounce } from 'lodash';
-import { CharacterCard } from '../../components/CharacterCard';
+import { Card } from '../../components/CharacterCard';
 import { InputSearch } from '../../components/InputSearch';
 
 import { api } from '../../services/api';
@@ -11,7 +11,7 @@ import { Container } from './styles';
 import { PaginationButton } from '../../components/PaginationButton';
 import { CompleteDataTypes } from '../../types/CompleteData.types';
 import { Loading } from '../../components/Loading';
-import { getCharacterId } from '../../utils/getCharacterId';
+import { getUrlId } from '../../utils/getUrlId';
 import { SelectButton } from '../../components/SelectButton';
 
 export default function Home() {
@@ -162,13 +162,14 @@ export default function Home() {
         !isFavouriteSelected && (
           <div className="cards">
             {characters.map((character) => (
-              <CharacterCard
-                imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getCharacterId(
-                  character,
+              <Card
+                imageUrl={`https://starwars-visualguide.com/assets/img/characters/${getUrlId(
+                  character.url,
                 )}.jpg`}
                 name={character.name}
                 key={character.name}
-                id={getCharacterId(character)}
+                id={getUrlId(character.url)}
+                type="characters"
               />
             ))}
           </div>

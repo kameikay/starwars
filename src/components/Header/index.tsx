@@ -22,7 +22,7 @@ export function Header() {
           Personagens
         </Link>
 
-        <Link to="/movies">
+        <Link to="/films">
           <MdMovie size={20} />
           Filmes
         </Link>
