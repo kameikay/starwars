@@ -40,4 +40,17 @@ export const GlobalStyles = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+    // Scrollbar
+    ::-webkit-scrollbar {
+    width: .5rem;
+  }
+  ::-webkit-scrollbar-track {
+    background: #7D7D7D;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #F0A500;
+    border-radius: 4px;
+  }
 `;
