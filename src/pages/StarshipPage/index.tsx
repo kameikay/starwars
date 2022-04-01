@@ -146,7 +146,7 @@ export default function StartshipPage() {
                     <ul>
                       {pilot.map((pilots) => (
                         <li key={pilots.name}>
-                          <Link to={`/pilots/${getUrlId(pilots.url)}`}>
+                          <Link to={`/characters/${getUrlId(pilots.url)}`}>
                             <FaUserAlt />
                             {pilots.name}
                           </Link>
