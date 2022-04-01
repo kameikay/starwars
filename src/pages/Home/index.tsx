@@ -136,9 +136,11 @@ export default function Home() {
                   {page - 1}
                 </PaginationButton>
                 <PaginationButton isActive>{page}</PaginationButton>
-                <PaginationButton onClick={() => setPage(page + 1)}>
-                  {page + 1}
-                </PaginationButton>
+                {data?.next && (
+                  <PaginationButton onClick={() => setPage(page + 1)}>
+                    {page + 1}
+                  </PaginationButton>
+                )}
               </>
             )}
 

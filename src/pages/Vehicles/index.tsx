@@ -118,7 +118,8 @@ export default function Vehicles() {
                   {page - 1}
                 </PaginationButton>
                 <PaginationButton isActive>{page}</PaginationButton>
-                {!data?.next && (
+
+                {!data?.next === null && (
                   <PaginationButton onClick={() => setPage(page + 1)}>
                     {page + 1}
                   </PaginationButton>
