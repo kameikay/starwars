@@ -6,6 +6,7 @@ import { Loading } from '../../components/Loading';
 import { useCharacter } from '../../hooks/useCharacter';
 import { api } from '../../services/api';
 import { Character } from '../../types/Character.type';
+import { getUrlId } from '../../utils/getUrlId';
 import { CharacterContainer, Container } from './styles';
 
 export default function CharacterPage() {
@@ -29,11 +30,6 @@ export default function CharacterPage() {
       setIsLoading(false);
     }
   }, [id]);
-
-  function getUrlId(url: string) {
-    const urlId = url.split('/');
-    return urlId[urlId.length - 2];
-  }
 
   useEffect(() => {
     getCharacterData();
@@ -116,30 +112,39 @@ export default function CharacterPage() {
                 <>
                   <div className="character-data-others-data">
                     <h2>Naves</h2>
-                    <ul>
-                      {starships.map((starship) => (
-                        <li key={starship.name}>
-                          <Link to={`/starships/${getUrlId(starship.url)}`}>
-                            <FaSpaceShuttle />
-                            {starship.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+
+                    {starships.length > 0 ? (
+                      <ul>
+                        {starships.map((starship) => (
+                          <li key={starship.name}>
+                            <Link to={`/starships/${getUrlId(starship.url)}`}>
+                              <FaSpaceShuttle />
+                              {starship.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span>Não há.</span>
+                    )}
                   </div>
 
                   <div className="character-data-others-data">
                     <h2>Veículos</h2>
-                    <ul>
-                      {vehicles.map((vehicle) => (
-                        <li key={vehicle.name}>
-                          <Link to={`/vehicles/${getUrlId(vehicle.url)}`}>
-                            <FaCarAlt />
-                            {vehicle.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                    {vehicles.length > 0 ? (
+                      <ul>
+                        {vehicles.map((vehicle) => (
+                          <li key={vehicle.name}>
+                            <Link to={`/vehicles/${getUrlId(vehicle.url)}`}>
+                              <FaCarAlt />
+                              {vehicle.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span>Não há.</span>
+                    )}
                   </div>
 
                   <div className="character-data-others-data">

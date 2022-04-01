@@ -10,4 +10,5 @@ export interface Film {
   vehicles: string[];
   species: string[];
   url: string;
+  release_date: string;
 }
