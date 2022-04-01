@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
 import { debounce } from 'lodash';
+import { useSelector } from 'react-redux';
 import { Card } from '../../components/CharacterCard';
 import { InputSearch } from '../../components/InputSearch';
 
@@ -12,6 +13,8 @@ import { PaginationButton } from '../../components/PaginationButton';
 import { CompleteDataTypes } from '../../types/CompleteData.types';
 import { Loading } from '../../components/Loading';
 import { getUrlId } from '../../utils/getUrlId';
+import { SelectButton } from '../../components/SelectButton';
+import { RootState } from '../../store';
 
 export default function Vehicles() {
   const [data, setData] = useState<CompleteDataTypes>();
@@ -19,6 +22,8 @@ export default function Vehicles() {
   const [inputSearch, setInputSearch] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFavouriteSelected, setIsFavouriteSelected] = useState<boolean>(false);
+  const vehiclesFavourite = useSelector((state: RootState) => state.vehicle);
 
   const getData = useCallback(async () => {
     try {
@@ -75,13 +80,30 @@ export default function Vehicles() {
       </div>
 
       <div className="header">
-        <InputSearch
-          type="text"
-          placeholder="Digite o nome do veículo a ser buscado..."
-          onChange={(event) => debouncedOnChange(event)}
-        />
+        {!isFavouriteSelected && (
+          <InputSearch
+            type="text"
+            placeholder="Digite o nome do veículo a ser buscado..."
+            onChange={(event) => debouncedOnChange(event)}
+          />
+        )}
+        <div className="select">
+          <SelectButton
+            type="button"
+            isSelected={isFavouriteSelected === false}
+            onClick={() => setIsFavouriteSelected(false)}
+          >
+            Todos
+          </SelectButton>
+          <SelectButton
+            isSelected={isFavouriteSelected === true}
+            onClick={() => setIsFavouriteSelected(true)}
+          >
+            Favoritos
+          </SelectButton>
+        </div>
 
-        {!inputSearch && (
+        {!inputSearch && !isFavouriteSelected && (
           <div className="pagination">
             {page === 1 ? (
               <div />
@@ -143,7 +165,7 @@ export default function Vehicles() {
           <Loading />
           <span>Carregando dados...</span>
         </div>
-      ) : (
+      ) : !isFavouriteSelected ? (
         <div className="cards">
           {vehicles.map((vehicle) => (
             <Card
@@ -154,6 +176,22 @@ export default function Vehicles() {
               key={vehicle.name}
               id={getUrlId(vehicle.url)}
               type="vehicles"
+              isFavourited={vehiclesFavourite.some(
+                (dataStore) => dataStore.name === vehicle.name,
+              )}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="cards">
+          {vehiclesFavourite.map((vehicle) => (
+            <Card
+              imageUrl={`https://starwars-visualguide.com/assets/img/vehicles/${vehicle.id}.jpg`}
+              name={vehicle.name}
+              key={vehicle.name}
+              id={vehicle.id}
+              type="vehicles"
+              isFavourited
             />
           ))}
         </div>

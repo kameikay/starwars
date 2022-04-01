@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface IStarshipFavourite {
+export interface IVehicleFavourite {
   id: string;
   name: string;
 }
 
-const starshipSlice = createSlice({
+const vehicleSlice = createSlice({
   name: 'starships',
-  initialState: <IStarshipFavourite[]>[],
+  initialState: <IVehicleFavourite[]>[],
   reducers: {
-    setStarshipFavourite: (state, { payload }) => {
+    setVehicleFavourite: (state, { payload }) => {
       const { name, id } = payload;
 
       const isFavouriteAlready = state.find(
@@ -27,7 +27,7 @@ const starshipSlice = createSlice({
         },
       ];
     },
-    removeFavouriteStarship: (state, { payload }) => {
+    removeFavouriteVehicle: (state, { payload }) => {
       const { name, id } = payload;
 
       return state.filter((film) => film.name !== name || film.id !== id);
@@ -35,6 +35,6 @@ const starshipSlice = createSlice({
   },
 });
 
-export const { setStarshipFavourite, removeFavouriteStarship } = starshipSlice.actions;
+export const { setVehicleFavourite, removeFavouriteVehicle } = vehicleSlice.actions;
 
-export default starshipSlice.reducer;
+export default vehicleSlice.reducer;

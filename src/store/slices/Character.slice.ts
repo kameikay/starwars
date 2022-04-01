@@ -27,9 +27,16 @@ const characterSlice = createSlice({
         },
       ];
     },
+    removeFavouriteCharacter: (state, { payload }) => {
+      const { name, id } = payload;
+
+      return state.filter(
+        (character) => character.name !== name || character.id !== id,
+      );
+    },
   },
 });
 
-export const { setFavouriteCharacter } = characterSlice.actions;
+export const { setFavouriteCharacter, removeFavouriteCharacter } = characterSlice.actions;
 
 export default characterSlice.reducer;

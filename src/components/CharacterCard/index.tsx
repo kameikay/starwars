@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { MdStarBorder, MdStar } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setFavouriteCharacter } from '../../store/slices/Character.slice';
-import { setFilmFavourite } from '../../store/slices/Film.slice';
-import { setStarshipFavourite } from '../../store/slices/Starship.slice';
+import {
+  setFavouriteCharacter,
+  removeFavouriteCharacter,
+} from '../../store/slices/Character.slice';
+import { removeFavoriteFilm, setFilmFavourite } from '../../store/slices/Film.slice';
+import { removeFavouriteStarship, setStarshipFavourite } from '../../store/slices/Starship.slice';
+import { removeFavouriteVehicle, setVehicleFavourite } from '../../store/slices/Vehicle.slice';
 import { Container } from './styles';
 
 interface ICardProps {
@@ -26,16 +30,38 @@ export function Card({
   const dispatch = useDispatch();
 
   function handleFavourite() {
-    if (type === 'characters') {
-      dispatch(setFavouriteCharacter({ name, id }));
-    }
+    if (isFavourited === false) {
+      if (type === 'characters') {
+        dispatch(setFavouriteCharacter({ name, id }));
+      }
 
-    if (type === 'films') {
-      dispatch(setFilmFavourite({ title: name, id }));
-    }
+      if (type === 'films') {
+        dispatch(setFilmFavourite({ title: name, id }));
+      }
 
-    if (type === 'starships') {
-      dispatch(setStarshipFavourite({ name, id }));
+      if (type === 'starships') {
+        dispatch(setStarshipFavourite({ name, id }));
+      }
+
+      if (type === 'vehicles') {
+        dispatch(setVehicleFavourite({ name, id }));
+      }
+    } else {
+      if (type === 'characters') {
+        dispatch(removeFavouriteCharacter({ name, id }));
+      }
+
+      if (type === 'films') {
+        dispatch(removeFavoriteFilm({ title: name, id }));
+      }
+
+      if (type === 'starships') {
+        dispatch(removeFavouriteStarship({ name, id }));
+      }
+
+      if (type === 'vehicles') {
+        dispatch(removeFavouriteVehicle({ name, id }));
+      }
     }
     setIsFavorite(!isFavorite);
   }

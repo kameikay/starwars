@@ -27,9 +27,14 @@ const filmSlice = createSlice({
         },
       ];
     },
+    removeFavoriteFilm: (state, { payload }) => {
+      const { title, id } = payload;
+
+      return state.filter((film) => film.title !== title || film.id !== id);
+    },
   },
 });
 
-export const { setFilmFavourite } = filmSlice.actions;
+export const { setFilmFavourite, removeFavoriteFilm } = filmSlice.actions;
 
 export default filmSlice.reducer;
