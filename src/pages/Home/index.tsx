@@ -44,7 +44,6 @@ export default function Home() {
 
       setData(returnedData);
       setCharacters(returnedData.results);
-      console.log('request');
     } catch {
     } finally {
       setIsLoading(false);

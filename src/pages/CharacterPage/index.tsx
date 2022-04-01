@@ -11,7 +11,11 @@ import { CharacterContainer, Container } from './styles';
 export default function CharacterPage() {
   const [data, setData] = useState<Character>();
   const {
-    films, homeWorld, starships, vehicles,
+    films,
+    homeWorld,
+    starships,
+    vehicles,
+    isLoading: isLoadingCharacter,
   } = useCharacter(data);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { id } = useParams();
@@ -20,14 +24,13 @@ export default function CharacterPage() {
     try {
       const response = await api.get(`/people/${id}`);
       setData(response.data);
-    } catch (error) {
-      console.log(error);
+    } catch {
     } finally {
       setIsLoading(false);
     }
   }, [id]);
 
-  function getUrlId(url: string | undefined) {
+  function getUrlId(url: string) {
     const urlId = url.split('/');
     return urlId[urlId.length - 2];
   }
@@ -107,43 +110,53 @@ export default function CharacterPage() {
             </div>
 
             <div className="character-data-others">
-              <div className="character-data-others-data">
-                <h2>Naves</h2>
-                <ul>
-                  {starships.map((starship) => (
-                    <li key={starship.name}>
-                      <Link to={`/starships/${getUrlId(starship.url)}`}>
-                        <FaSpaceShuttle />
-                        {starship.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {isLoadingCharacter ? (
+                <Loading />
+              ) : (
+                <>
+                  <div className="character-data-others-data">
+                    <h2>Naves</h2>
+                    <ul>
+                      {starships.map((starship) => (
+                        <li key={starship.name}>
+                          <Link to={`/starships/${getUrlId(starship.url)}`}>
+                            <FaSpaceShuttle />
+                            {starship.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              <div className="character-data-others-data">
-                <h2>Veículos</h2>
-                <ul>
-                  {vehicles.map((vehicle) => (
-                    <li key={vehicle.name}>
-                      <FaCarAlt />
-                      {vehicle.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <div className="character-data-others-data">
+                    <h2>Veículos</h2>
+                    <ul>
+                      {vehicles.map((vehicle) => (
+                        <li key={vehicle.name}>
+                          <Link to={`/vehicles/${getUrlId(vehicle.url)}`}>
+                            <FaCarAlt />
+                            {vehicle.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              <div className="character-data-others-data">
-                <h2>Filmes</h2>
-                <ul>
-                  {films.map((film) => (
-                    <li key={film.title}>
-                      <MdMovie />
-                      {film.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <div className="character-data-others-data">
+                    <h2>Filmes</h2>
+                    <ul>
+                      {films.map((film) => (
+                        <li key={film.title}>
+                          <Link to={`/films/${getUrlId(film.url)}`}>
+                            <MdMovie />
+                            {film.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

@@ -29,67 +29,88 @@ export function useCharacter(data: Character | undefined) {
     name: '',
     url: '',
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const getFilms = useCallback(async () => {
-    data?.films.forEach(async (film) => {
-      const response = await fetch(film);
-      const filmData = await response.json();
-      setFilms((prevState) => {
-        if (prevState.includes(filmData.title)) return prevState;
-        return [
-          ...prevState,
-          {
-            title: filmData.title,
-            url: filmData.url,
-          },
-        ];
+    try {
+      data?.films.forEach(async (film) => {
+        const response = await fetch(film);
+        const filmData = await response.json();
+        setFilms((prevState) => {
+          if (prevState.includes(filmData.title)) return prevState;
+          return [
+            ...prevState,
+            {
+              title: filmData.title,
+              url: filmData.url,
+            },
+          ];
+        });
       });
-    });
+    } catch {
+    } finally {
+      setIsLoading(false);
+    }
   }, [data?.films]);
 
   const getVehicles = useCallback(async () => {
-    data?.vehicles.forEach(async (vehicle) => {
-      const response = await fetch(vehicle);
-      const vehicleData = await response.json();
-      setVehicles((prevState) => {
-        if (prevState.includes(vehicleData.name)) return prevState;
-        return [
-          ...prevState,
-          {
-            name: vehicleData.name,
-            url: vehicleData.url,
-          },
-        ];
+    try {
+      data?.vehicles.forEach(async (vehicle) => {
+        const response = await fetch(vehicle);
+        const vehicleData = await response.json();
+        setVehicles((prevState) => {
+          if (prevState.includes(vehicleData.name)) return prevState;
+          return [
+            ...prevState,
+            {
+              name: vehicleData.name,
+              url: vehicleData.url,
+            },
+          ];
+        });
       });
-    });
+    } catch {
+    } finally {
+      setIsLoading(false);
+    }
   }, [data?.vehicles]);
 
   const getStarships = useCallback(async () => {
-    data?.starships.forEach(async (starship) => {
-      const response = await fetch(starship);
-      const starshipData = await response.json();
+    try {
+      data?.starships.forEach(async (starship) => {
+        const response = await fetch(starship);
+        const starshipData = await response.json();
 
-      setStarships((prevState) => {
-        if (prevState.includes(starshipData.name)) return prevState;
-        return [
-          ...prevState,
-          {
-            name: starshipData.name,
-            url: starshipData.url,
-          },
-        ];
+        setStarships((prevState) => {
+          if (prevState.includes(starshipData.name)) return prevState;
+          return [
+            ...prevState,
+            {
+              name: starshipData.name,
+              url: starshipData.url,
+            },
+          ];
+        });
       });
-    });
+    } catch {
+    } finally {
+      setIsLoading(false);
+    }
   }, [data?.starships]);
 
   const getHomeWorld = useCallback(async () => {
-    if (!data?.homeworld) return;
-    const response = await fetch(data.homeworld);
-    const homeWorldData = await response.json();
-    setHomeWorld({
-      name: homeWorldData.name,
-      url: homeWorldData.url,
-    });
+    try {
+      if (!data?.homeworld) return;
+      const response = await fetch(data.homeworld);
+      const homeWorldData = await response.json();
+      setHomeWorld({
+        name: homeWorldData.name,
+        url: homeWorldData.url,
+      });
+    } catch {
+    } finally {
+      setIsLoading(false);
+    }
   }, [data?.homeworld]);
 
   useEffect(() => {
@@ -113,5 +134,6 @@ export function useCharacter(data: Character | undefined) {
     vehicles,
     starships,
     homeWorld,
+    isLoading,
   };
 }

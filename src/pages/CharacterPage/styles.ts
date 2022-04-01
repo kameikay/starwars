@@ -31,8 +31,8 @@ export const CharacterContainer = styled.div`
       background-color: ${({ theme }) => theme.colors.dark[800]};
       padding: 1rem;
       width: 100%;
-      border-radius: .5rem;
-            
+      border-radius: 0.5rem;
+
       h1 {
         font-weight: 500;
         font-size: 2rem;
@@ -44,6 +44,14 @@ export const CharacterContainer = styled.div`
       p {
         span {
           color: ${({ theme }) => theme.colors.primary.main};
+
+          a {
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              color: ${({ theme }) => theme.colors.primary.light};
+            }
+          }
         }
       }
     }
@@ -70,12 +78,19 @@ export const CharacterContainer = styled.div`
 
           li {
             list-style: none;
-            display: flex;
-            align-items: center;
-            justify-content: start;
+            transition: all 0.3s ease-in;
+            a {
+              display: flex;
+              align-items: center;
+              justify-content: start;
+            }
 
             svg {
               margin-right: 1rem;
+            }
+
+            &:hover {
+              color: ${({ theme }) => theme.colors.primary.main};
             }
           }
         }
