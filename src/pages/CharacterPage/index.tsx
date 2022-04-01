@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { FaCarAlt, FaSpaceShuttle } from 'react-icons/fa';
+import { MdMovie } from 'react-icons/md';
 import { Loading } from '../../components/Loading';
 import { useCharacter } from '../../hooks/useCharacter';
 import { api } from '../../services/api';
@@ -25,6 +27,11 @@ export default function CharacterPage() {
     }
   }, [id]);
 
+  function getUrlId(url: string | undefined) {
+    const urlId = url.split('/');
+    return urlId[urlId.length - 2];
+  }
+
   useEffect(() => {
     getCharacterData();
   }, [getCharacterData]);
@@ -36,64 +43,107 @@ export default function CharacterPage() {
       ) : (
         <CharacterContainer>
           <div className="character-data">
-            <h1>{data?.name}</h1>
             <div className="character-data-details">
+              <h1>{data?.name}</h1>
               <p>
                 Planeta natal:
                 {' '}
-                {homeWorld}
+                <span>
+                  <Link to={`/planets/${getUrlId(homeWorld.url)}`}>
+                    {homeWorld.name}
+                  </Link>
+                </span>
               </p>
 
               <p>
                 Data de nascimento:
                 {' '}
-                {data?.birth_year}
+                <span>{data?.birth_year}</span>
               </p>
 
               <p>
                 Gênero:
                 {' '}
-                {data?.gender}
+                <span>{data?.gender}</span>
               </p>
 
               <p>
                 Altura:
                 {' '}
-                {data?.height}
+                <span>
+                  {data?.height}
+                  {' '}
+                  cm
+                </span>
               </p>
 
               <p>
                 Peso:
                 {' '}
-                {data?.mass}
+                <span>
+                  {data?.mass}
+                  {' '}
+                  kg
+                </span>
               </p>
 
               <p>
                 Cor da pele:
                 {' '}
-                {data?.skin_color}
+                <span>{data?.skin_color}</span>
               </p>
 
               <p>
                 Cor dos olhos:
                 {' '}
-                {data?.eye_color}
+                <span>{data?.eye_color}</span>
               </p>
 
               <p>
                 Cor do cabelo:
                 {' '}
-                {data?.hair_color}
+                <span>{data?.hair_color}</span>
               </p>
             </div>
 
-            <div className="character-data-spaceships">
-              <h2>Naves</h2>
-              <ul>
-                {starships.map((starship) => (
-                  <li key={starship}>{starship}</li>
-                ))}
-              </ul>
+            <div className="character-data-others">
+              <div className="character-data-others-data">
+                <h2>Naves</h2>
+                <ul>
+                  {starships.map((starship) => (
+                    <li key={starship.name}>
+                      <Link to={`/starships/${getUrlId(starship.url)}`}>
+                        <FaSpaceShuttle />
+                        {starship.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="character-data-others-data">
+                <h2>Veículos</h2>
+                <ul>
+                  {vehicles.map((vehicle) => (
+                    <li key={vehicle.name}>
+                      <FaCarAlt />
+                      {vehicle.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="character-data-others-data">
+                <h2>Filmes</h2>
+                <ul>
+                  {films.map((film) => (
+                    <li key={film.title}>
+                      <MdMovie />
+                      {film.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
 

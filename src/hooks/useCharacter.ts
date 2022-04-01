@@ -1,11 +1,34 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Character } from '../types/Character.type';
 
+type Film = {
+  title: string;
+  url: string;
+};
+
+type Vehicle = {
+  name: string;
+  url: string;
+};
+
+type Starship = {
+  name: string;
+  url: string;
+};
+
+type HomeWorld = {
+  name: string;
+  url: string;
+};
+
 export function useCharacter(data: Character | undefined) {
-  const [films, setFilms] = useState<string[]>([]);
-  const [vehicles, setVehicles] = useState<string[]>([]);
-  const [starships, setStarships] = useState<string[]>([]);
-  const [homeWorld, setHomeWorld] = useState<string>('');
+  const [films, setFilms] = useState<Film[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [starships, setStarships] = useState<Starship[]>([]);
+  const [homeWorld, setHomeWorld] = useState<HomeWorld>({
+    name: '',
+    url: '',
+  });
 
   const getFilms = useCallback(async () => {
     data?.films.forEach(async (film) => {
@@ -13,7 +36,13 @@ export function useCharacter(data: Character | undefined) {
       const filmData = await response.json();
       setFilms((prevState) => {
         if (prevState.includes(filmData.title)) return prevState;
-        return [...prevState, filmData.title];
+        return [
+          ...prevState,
+          {
+            title: filmData.title,
+            url: filmData.url,
+          },
+        ];
       });
     });
   }, [data?.films]);
@@ -24,7 +53,13 @@ export function useCharacter(data: Character | undefined) {
       const vehicleData = await response.json();
       setVehicles((prevState) => {
         if (prevState.includes(vehicleData.name)) return prevState;
-        return [...prevState, vehicleData.name];
+        return [
+          ...prevState,
+          {
+            name: vehicleData.name,
+            url: vehicleData.url,
+          },
+        ];
       });
     });
   }, [data?.vehicles]);
@@ -36,7 +71,13 @@ export function useCharacter(data: Character | undefined) {
 
       setStarships((prevState) => {
         if (prevState.includes(starshipData.name)) return prevState;
-        return [...prevState, starshipData.name];
+        return [
+          ...prevState,
+          {
+            name: starshipData.name,
+            url: starshipData.url,
+          },
+        ];
       });
     });
   }, [data?.starships]);
@@ -45,7 +86,10 @@ export function useCharacter(data: Character | undefined) {
     if (!data?.homeworld) return;
     const response = await fetch(data.homeworld);
     const homeWorldData = await response.json();
-    setHomeWorld(homeWorldData.name);
+    setHomeWorld({
+      name: homeWorldData.name,
+      url: homeWorldData.url,
+    });
   }, [data?.homeworld]);
 
   useEffect(() => {
