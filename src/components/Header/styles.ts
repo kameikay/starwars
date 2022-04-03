@@ -34,4 +34,17 @@ export const Container = styled.header`
       margin-left: 1.5rem;
     }
   }
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center !important;
+
+      a + a {
+        margin-left: 0 !important;
+      }
+    }
+  }
 `;

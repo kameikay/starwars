@@ -27,6 +27,19 @@ export const Container = styled.div`
     justify-content: space-between;
     padding: 0 1rem;
 
+    @media screen and (max-width: 480px) {
+      flex-direction: column;
+      justify-content: center;
+
+      .select {
+        margin-top: 1rem;
+      }
+
+      .pagination {
+        margin-top: 1rem;
+      }
+    }
+
     .pagination {
       display: flex;
       align-items: center;
@@ -54,6 +67,16 @@ export const Container = styled.div`
 
     > div {
       margin: 1rem;
+    }
+
+    @media screen and (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      > div {
+        margin: 1rem 0;
+      }
     }
   }
 

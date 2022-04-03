@@ -145,7 +145,7 @@ export default function VehiclePage() {
             )}
           </div>
 
-          <div className="film-image">
+          <div className="vehicle-image">
             <img
               src={`https://starwars-visualguide.com/assets/img/vehicles/${id}.jpg`}
               alt={`Imagem de ${data?.name}`}

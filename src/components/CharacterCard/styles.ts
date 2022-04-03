@@ -7,6 +7,10 @@ export const Container = styled.div`
   border-radius: 0.5rem;
   z-index: 2;
 
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+
   > button {
     display: flex;
     align-items: center;

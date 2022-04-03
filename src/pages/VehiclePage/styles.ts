@@ -4,6 +4,10 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 2rem;
+
+  @media screen and (max-width: 480px) {
+    padding: 1rem 0;
+  }
 `;
 
 export const CharacterContainer = styled.div`
@@ -19,7 +23,7 @@ export const CharacterContainer = styled.div`
 
     img {
       height: 100%;
-      height: 100%;
+      width: 100%;
     }
   }
 
@@ -61,7 +65,7 @@ export const CharacterContainer = styled.div`
       align-items: flex-start;
       justify-content: space-between;
       margin-top: 1rem;
-      
+
       > div + div {
         margin-left: 1rem;
       }
@@ -75,7 +79,6 @@ export const CharacterContainer = styled.div`
         background-color: ${({ theme }) => theme.colors.dark[800]};
         padding: 1rem;
         border-radius: 0.5rem;
-
 
         h2 {
           font-weight: 400;
@@ -108,6 +111,29 @@ export const CharacterContainer = styled.div`
               color: ${({ theme }) => theme.colors.primary.main};
             }
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+
+    .vehicle-image {
+      margin-top: 2rem;
+    }
+
+    .vehicles-data {
+      margin-right: 0;
+
+      &-others {
+        flex-direction: column;
+        > div + div {
+          margin-left: 0;
+        }
+
+        &-data {
+          margin-top: 1rem;
         }
       }
     }

@@ -159,7 +159,7 @@ export default function StartshipPage() {
             )}
           </div>
 
-          <div className="film-image">
+          <div className="starship-image">
             <img
               src={`https://starwars-visualguide.com/assets/img/starships/${id}.jpg`}
               alt={`Imagem de ${data?.name}`}

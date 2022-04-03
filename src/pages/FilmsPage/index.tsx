@@ -102,10 +102,8 @@ export default function FilmPage() {
                     <ul>
                       {planets.map((planet) => (
                         <li key={planet.name}>
-                          <Link to={`/planets/${getUrlId(planet.url)}`}>
-                            <IoMdPlanet />
-                            {planet.name}
-                          </Link>
+                          <IoMdPlanet />
+                          {planet.name}
                         </li>
                       ))}
                     </ul>
@@ -146,10 +144,8 @@ export default function FilmPage() {
                     <ul>
                       {species.map((specie) => (
                         <li key={specie.name}>
-                          <Link to={`/species/${getUrlId(specie.url)}`}>
-                            <BiDna />
-                            {specie.name}
-                          </Link>
+                          <BiDna />
+                          {specie.name}
                         </li>
                       ))}
                     </ul>

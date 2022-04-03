@@ -13,4 +13,8 @@ export const InputSearch = styled.input`
   &:focus {
     border: 2px solid ${({ theme }) => theme.colors.primary.main};
   }
+
+  @media screen and (max-width: 480px) {
+    width: 100% !important;
+  }
 `;

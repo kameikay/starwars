@@ -4,6 +4,10 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 2rem;
+
+  @media screen and (max-width: 480px) {
+    padding: 1rem 0;
+  }
 `;
 
 export const CharacterContainer = styled.div`
@@ -19,7 +23,7 @@ export const CharacterContainer = styled.div`
 
     img {
       height: 100%;
-      height: 100%;
+      width: 100%;
     }
   }
 
@@ -144,6 +148,26 @@ export const CharacterContainer = styled.div`
               margin-right: 1rem;
             }
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+
+    .film-image {
+      margin-top: 2rem;
+    }
+
+    .film-data {
+      margin-right: 0;
+
+      &-others {
+        flex-direction: column;
+
+        &-data {
+          margin-top: 1rem;
         }
       }
     }

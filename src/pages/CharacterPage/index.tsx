@@ -47,11 +47,7 @@ export default function CharacterPage() {
               <p>
                 Planeta natal:
                 {' '}
-                <span>
-                  <Link to={`/planets/${getUrlId(homeWorld.url)}`}>
-                    {homeWorld.name}
-                  </Link>
-                </span>
+                <span>{homeWorld.name}</span>
               </p>
 
               <p>

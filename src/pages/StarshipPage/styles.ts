@@ -4,6 +4,10 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 2rem;
+
+  @media screen and (max-width: 480px) {
+    padding: 1rem 0;
+  }
 `;
 
 export const CharacterContainer = styled.div`
@@ -19,7 +23,7 @@ export const CharacterContainer = styled.div`
 
     img {
       height: 100%;
-      height: 100%;
+      width: 100%;
     }
   }
 
@@ -108,6 +112,30 @@ export const CharacterContainer = styled.div`
               color: ${({ theme }) => theme.colors.primary.main};
             }
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+
+    .starship-image {
+      margin-top: 2rem;
+    }
+
+    .starships-data {
+      margin-right: 0;
+
+      &-others {
+        flex-direction: column;
+
+        &-data {
+          margin-top: 1rem;
+        }
+
+        > div + div {
+          margin-left: 0;
         }
       }
     }
