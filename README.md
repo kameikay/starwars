@@ -1,6 +1,6 @@
-# KyptoKoin
+# Star Wars
 
-KyptoKoin is a React App that's consumes an external Cryptocurrencies' API.
+Star Wars is a React App that's consumes an external Star Wars' API.
 
 ## Installation
 
